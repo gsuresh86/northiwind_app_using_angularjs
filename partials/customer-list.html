@@ -1,0 +1,46 @@
+<div class="customerGrid grid drop-shadow">
+    <div class="grid-header">
+        <div class="grid-tr">
+            <div class="grid-td c1">ContactName</div>
+            <div class="grid-td c2">CustomerID</div>
+            <div class="grid-td c5">CompanyName</div>
+            <div class="grid-td c3">Phone</div>
+            <div class="grid-td c4">Fax</div>
+            <div class="grid-td c5">Address</div>
+            <div class="grid-td c5">City</div>
+            <div class="grid-td c5">Country</div>
+        </div>
+    </div>
+    <div class="grid-body">
+        <div class="grid-tr" ng-class="{active : isSelected(customer)}" ng-repeat="customer in customers | filter:query" ng-click="handleRowClick()" align="">
+            <div class="grid-td c1">{{customer.ContactName}}</div>
+            <div class="grid-td c2">{{customer.CustomerID}}</div>
+            <div class="grid-td c5">{{customer.CompanyName}}</div>
+            <div class="grid-td c3">{{customer.Phone}}</div>
+            <div class="grid-td c4">{{customer.Fax}}</div>
+            <div class="grid-td c5">{{customer.Address}}</div>
+            <div class="grid-td c5">{{customer.City}}</div>
+            <div class="grid-td c5">{{customer.Country}}</div>
+        </div>
+    </div>
+</div>
+
+
+<ng-google-map id='map-canvas' ng-show="true"></ng-google-map>
+
+<div class="customerOrder grid drop-shadow">
+    <div class="grid-header">
+        <div class="grid-tr">
+            <div class="grid-td c1">OrderID</div>
+            <div class="grid-td c2">OrderDate</div>
+            <div class="grid-td c3">ShippedDate</div>
+        </div>
+    </div>
+    <div class="grid-body">
+        <div class="grid-tr" ng-repeat="order in orders | filter: {CustomerID: selCustomer}| orderBy:orderProp">
+            <div class="grid-td c1">{{order.OrderID}}</div>
+            <div class="grid-td c2">{{order.OrderDate}}</div>
+            <div class="grid-td c3">{{order.ShippedDate}}</div>
+        </div>
+    </div>
+</div>

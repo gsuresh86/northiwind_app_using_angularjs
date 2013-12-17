@@ -1,0 +1,18 @@
+<div class="order-info">
+    <div class="orderId"><div class='olabel'>OrderID</div><div class='ovalue'>{{orderInfo.OrderID}}</div></div>
+    <div class=""><div class='olabel'>OrderDate</div><div class='ovalue'>{{orderInfo.OrderDate}}</div></div>
+    <div class=""><div class='olabel'>CustomerID</div><div class='ovalue'>{{orderInfo.CustomerID}}</div></div>
+    <div class=""><div class='olabel'>ShippedDate</div><div class='ovalue'>{{orderInfo.ShippedDate}}</div></div>
+    <div class=""><div class='olabel'>Freight</div><div class='ovalue'>{{orderInfo.Freight}}</div></div>
+</div>
+
+<div class="address">
+    <div class="shipAddLabel">Shipping Address</div>
+    <div class="shipAddInfo">
+        <div>{{orderInfo.CustomerID}}</div>
+        <div>{{orderInfo.ShipAddress}}</div>
+        <div>{{orderInfo.ShipCity}}</div>
+        <div class="">{{orderInfo.ShipCountry}}<span> - {{orderInfo.ShipPostalCode}}</span></div>
+    </div>
+</div>
+

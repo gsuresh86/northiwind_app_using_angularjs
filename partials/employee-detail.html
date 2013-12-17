@@ -1,0 +1,33 @@
+<div class="emp-info drop-shadow">
+    <div class="profile-pic">
+        <img src="img/profile/{{employeeInfo.EmployeeID}}.jpg"/>
+    </div>
+    <div class="emp-id">
+        <div>Emp. No </div>
+        <div class="empID">{{employeeInfo.EmployeeID}}</div>
+    </div>
+    <div class="emp-det-name">
+        <span class="">{{employeeInfo.FirstName   }}</span>
+        <span class="">{{employeeInfo.LastName}}</span>
+    </div>
+    <div class="">Joined {{employeeInfo.HireDate}}</div>
+    <div class="emp-biodata">
+        <span class="infoLabel">Personal Info</span>
+        <span>Born On </span> <span class="">{{employeeInfo.BirthDate}}</span>
+        <div class="addLabel">Address</div>
+        <div class="">{{employeeInfo.Address}}</div>
+        <div class="">{{employeeInfo.City}}</div>
+        <div class="">{{employeeInfo.Country}} - {{employeeInfo.PostalCode}}</div>
+    </div>
+    <div class="emp-contact">
+        <span>Contact</span>
+        <div>HomePhone {{employeeInfo.HomePhone}}</div>
+        <div>Extension {{employeeInfo.Extension}}</div>
+    </div>
+    <div class="emp-note">
+        <span>Notes</span>
+        <div class="note-data">
+            {{employeeInfo.Notes}}
+        </div>
+    </div>
+</div>

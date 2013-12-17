@@ -1,0 +1,16 @@
+<div class="popup-header">
+    <!--<span ng-click="close()">X</span>-->
+</div>
+<div class='prod-cont'>
+    <div class="prod_title"><h2>{{productInfo.ProductName}}</h2></div>
+    <div class="prod-img" ng-style="{'background':'url(img/product/'+ productInfo.ProductID +'.png)'}"></span></div>
+    <div class=""><span class='plabel'>Price  </span> <span class='pvalue'>{{productInfo.UnitPrice | currency:'&#x20B9;'}}</span></div>
+    <div class=""><span class='plabel'>ReorderLevel </span> <span class='pvalue'>{{productInfo.ReorderLevel}}</span></div>
+    <div class=""><span class='plabel'>SupplierID </span>   <span class='pvalue'>{{productInfo.SupplierID}}</span></div>
+    <div class=""><span class='plabel'>CategoryID </span>   <span class='pvalue'>{{productInfo.CategoryID}}</span></div>
+
+    <div class="stock">
+        <div class=""><span class='plabel'>UnitsInStock </span> <span class='pvalue'>{{productInfo.UnitsInStock}}</span></div>
+        <div class=""><span class='plabel'>UnitsOnOrder </span> <span class='pvalue'>{{productInfo.UnitsOnOrder}}</span></div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html ng-app="NorthwindApp" data-ng-csp>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="js/lib/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="js/lib/angular/angular-route.js"></script>
+    <script type="text/javascript" src="js/lib/angular/angular-resource.js"></script>
+    <script type="text/javascript" src="js/lib/angular/angular-route.js"></script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+
+
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="logo">
+                <span class="app_title">Northwind</span>
+            </div>
+            <div class="navmenu buttons">
+                <ul>
+                    <li ng-class='{active: selected==1}'><a href="#employees">Employees</a></li>
+                    <li class="nav_separator"><img src="img/nav_separator.png" width="3" height="29" alt=""></li>
+                    <li ng-class='{active: selected==2}'><a href="#customers">Customers</a></li>
+                    <li class="nav_separator"><img src="img/nav_separator.png" width="3" height="29" alt=""></li>
+                    <li ng-class='{active: selected==3}'><a href="#products">Products</a></li>
+                    <li class="nav_separator"><img src="img/nav_separator.png" width="3" height="29" alt=""></li>
+                    <li ng-class='{active: selected==4}'><a href="#orders">Orders</a></li>
+                    <li class="nav_separator"><img src="img/nav_separator.png" width="3" height="29" alt=""></li>
+                    <li ng-class='{active: selected==5}'><a href="#suppliers">Supplier</a></li>
+                </ul>
+            </div>
+        </header>
+        <div class="view-container">
+            <div class="searchContainer"><span class="searchBox"><input type="text" ng-model="query" placeholder="Search"></span> </div>
+            <div ng-view class="view-frame"></div>
+        </div>
+    </div>
+    <ng-overlay class="overlay" ng-show="showOverlay"></ng-overlay>
+</body>
+</html>
+
+

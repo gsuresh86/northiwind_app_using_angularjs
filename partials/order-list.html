@@ -1,0 +1,25 @@
+<div class="orderGrid grid drop-shadow">
+    <div class="grid-header">
+        <div class="grid-tr">
+            <div class="grid-td c1">OrderID</div>
+            <div class="grid-td c2">OrderDate</div>
+            <div class="grid-td c5">CustomerID</div>
+            <div class="grid-td c3">ShippedDate</div>
+            <div class="grid-td c4">Freight</div>
+            <div class="grid-td c5">ShipCity</div>
+            <div class="grid-td c5">ShipCountry</div>
+        </div>
+    </div>
+    <div class="grid-body">
+        <div class="grid-tr" ng-class="{active : isSelected(order)}" ng-click="handleRowClick()" ng-repeat="order in orders | limitTo: 12 | filter:query | orderBy:orderProp">
+            <div class="grid-td c1">{{order.OrderID}}</div>
+            <div class="grid-td c2">{{order.OrderDate}}</div>
+            <div class="grid-td c5">{{order.CustomerID}}</div>
+            <div class="grid-td c3">{{order.ShippedDate}}</div>
+            <div class="grid-td c4">{{order.Freight}}</div>
+            <div class="grid-td c5">{{order.ShipCity}}</div>
+            <div class="grid-td c5">{{order.ShipCountry}}</div>
+        </div>
+    </div>
+</div>
+<div order-detail class="orderDetail" ng-show="showOrder"></div>

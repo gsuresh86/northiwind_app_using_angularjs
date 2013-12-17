@@ -1,0 +1,7 @@
+<div class="supp_list">
+    <div ng-repeat="supplier in suppliers | filter:query" class="supp_cont">
+        <div><span>ShipperID :</span> {{supplier.ShipperID}}</div>
+        <div><span>Company Name :</span> {{supplier.CompanyName}}</div>
+        <div><span>Phone : </span>{{supplier.Phone}}</div>
+    </div>
+</div>

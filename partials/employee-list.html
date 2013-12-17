@@ -1,0 +1,12 @@
+<div class="emp-container">
+    <div class="emp-list" ng-click="hideEmpInfo($event)">
+        <span>Click on the employee name to check more info.</span>
+        <div class="" ng-repeat="employee in employees | filter:query | orderBy:orderProp">
+            <div class="emp-name" ng-click="handleClick($event)" ng-class="{active : isSelected(employee)}">
+                <span class="">{{employee.FirstName }}</span>
+                <span class="">{{employee.LastName}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="emp-detail" employee-detail ng-show="showEmployee"></div>
+</div>

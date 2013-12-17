@@ -1,0 +1,18 @@
+<button class="nav_left" ng-click="currentPage=currentPage-1" ng-hide="currentPage==0"> ‹ </button>
+<div class="prod-list">
+    <div class="prod-info drop-shadow" ng-class="{active : isSelected(product)}" ng-click="handleRowClick()"
+         ng-repeat="product in products|startFrom:currentPage*pageSize | limitTo:pageSize | filter:query | orderBy:orderProp">
+        <div class="prod-img">
+            <img src="img/product/{{product.ProductID}}.png"/>
+        </div>
+        <div class="prod_name"><h4>{{product.ProductName}}</h4></div>
+        <div class="">Price : {{product.UnitPrice|currency:'&#x20B9;'}}</div>
+    </div>
+</div>
+<button class="nav_right" ng-click="currentPage=currentPage+1" ng-hide="currentPage >= products.length/pageSize - 1"> › </button>
+<div class="prod-detail" ng-show="showProduct" tabindex="0" ng-keydown="handleKeyDown()">
+    <input type="text" tabindex="0"/>
+    <div product-detail></div>
+</div>
+
+
