@@ -32,20 +32,36 @@ NorthwindApp.config(['$routeProvider',
     }
 ]);
 
+
 /* Controller */
+NorthwindApp.controller('NavigationController', ['$scope',
+    function($scope){
+        $scope.navs = [
+            {id: 1, navID: 'employees', caption: 'Employees'},
+            {id: 2, navID: 'customers', caption: 'Customers'},
+            {id: 3, navID: 'products', caption: 'Products'},
+            {id: 4, navID: 'orders', caption: 'Orders'},
+            {id: 5, navID: 'suppliers', caption: 'Suppliers'}
+        ];
+    }
+]);
+
 NorthwindApp.controller('EmployeeController', ['$scope', 'NorthwindService',
     function($scope, NorthwindService){
         $scope.$parent.selected = 1;
 
-        NorthwindService.getData('northwind/employees.json')
-            .success(function(response){ $scope.employees = response; })
+        NorthwindService.getData('data/employees.json')
+            .success(function(response){
+                $scope.employees = response;
+                $scope.selected = $scope.employeeInfo = $scope.employees[0];
+                $scope.showEmployee = true;
+            })
             .error(function(response){ /*todo error case */ });
 
         $scope.handleClick = function($event){
             if ($event.stopPropagation) $event.stopPropagation();
             if ($event.preventDefault) $event.preventDefault();
-            $scope.selected = this.employee;
-            $scope.employeeInfo = this.employee;
+            $scope.selected = $scope.employeeInfo = this.employee;
             $scope.showEmployee = true;
         };
 
@@ -64,10 +80,11 @@ NorthwindApp.controller('EmployeeController', ['$scope', 'NorthwindService',
 
 NorthwindApp.controller('CustomerController', ['$scope', 'NorthwindService',
     function($scope, NorthwindService){
+
         $scope.$parent.selected = 2;
         NorthwindService.trigger('loadMap');
 
-        NorthwindService.getData('northwind/customers.json')
+        NorthwindService.getData('data/customers.json')
             .success(function(response){
                 $scope.customers = response;
                 var customer = $scope.customers[0];
@@ -98,7 +115,11 @@ NorthwindApp.controller('CustomerController', ['$scope', 'NorthwindService',
 NorthwindApp.controller('OrderController', ['$scope', 'NorthwindService',
     function($scope, NorthwindService){
         $scope.$parent.selected = 4;
-        NorthwindService.getData('northwind/orders.json')
+        $scope.showProduct = false;
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.orders = [];
+        NorthwindService.getData('data/orders.json')
             .success(function(response){ $scope.orders = response; })
             .error(function(response){ /*todo error case */ });
 
@@ -120,12 +141,19 @@ NorthwindApp.controller('ProductController', ['$scope', '$rootScope', 'Northwind
         $scope.currentPage = 0;
         $scope.pageSize = 15;
         $scope.products = [];
-         NorthwindService.getData('northwind/products.json')
+        NorthwindService.getData('data/products.json')
             .success(function(response){
-                $scope.products = response;
-                $scope.noOfPages =  $scope.products.length/$scope.pageSize;
+                $scope.initialize(response);
             })
             .error(function(response){ /*todo error case */ });
+
+        $scope.initialize = function(products){
+            angular.forEach(products, function(product){
+                product.prodImg = 'img/product/' + product.ProductID + '.png';
+                $scope.products.push(product);
+            });
+            $scope.noOfPages =  $scope.products.length/$scope.pageSize;
+        };
 
         $scope.handleRowClick = function(){
             $scope.showProduct = true;
@@ -152,7 +180,7 @@ NorthwindApp.controller('ProductController', ['$scope', '$rootScope', 'Northwind
 NorthwindApp.controller('SupplierController', ['$scope', 'NorthwindService',
     function($scope, NorthwindService){
         $scope.$parent.selected = 5;
-        NorthwindService.getData('northwind/suppliers.json')
+        NorthwindService.getData('data/suppliers.json')
             .success(function(response){ $scope.suppliers = response; })
             .error(function(response){ /*todo error case */ });
     }
@@ -173,10 +201,12 @@ NorthwindApp.service('NorthwindService', ['$resource', '$rootScope', '$http', fu
     }]
 );
 */
+
 /* Factory */
-NorthwindApp.factory('NorthwindService', ['$resource', '$rootScope', '$http',
-    function($resource, $rootScope, $http){
+NorthwindApp.factory('NorthwindService', ['$rootScope', '$http',
+    function($rootScope, $http){
         return {
+
             trigger: function(method) {
                 var args = Array.prototype.slice.call(arguments, 1);
                 args = args.join(',');
@@ -203,7 +233,7 @@ NorthwindApp.directive('productDetail', function(){
         templateUrl : 'partials/product-detail.html',
         link: function(scope, element){
             scope.close = function(){
-                this.showProduct = false
+                this.showProduct = false;
                 this.$parent.showOverlay = false;
             }
         }

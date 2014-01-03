@@ -1,4 +1,11 @@
 <div class="orderGrid grid drop-shadow">
+    <div class="grid-nav">
+        <button ng-click="currentPage=0"><span> ‹‹ </span> </button>
+        <button ng-click="currentPage=currentPage-1" ng-disabled="currentPage==0"><span> ‹ </span> </button>
+        <button class="pageValue"><span>{{currentPage+1 }} / {{ orders.length/pageSize}}</span></button>
+        <button ng-click="currentPage=currentPage+1" ng-disabled="currentPage >= orders.length/pageSize - 1"><span> › </span> </button>
+        <button ng-click="currentPage=orders.length/pageSize - 1"><span> ›› </span> </button>
+    </div>
     <div class="grid-header">
         <div class="grid-tr">
             <div class="grid-td c1">OrderID</div>
@@ -11,7 +18,8 @@
         </div>
     </div>
     <div class="grid-body">
-        <div class="grid-tr" ng-class="{active : isSelected(order)}" ng-click="handleRowClick()" ng-repeat="order in orders | limitTo: 12 | filter:query | orderBy:orderProp">
+        <div class="grid-tr" ng-class="{active : isSelected(order)}" ng-click="handleRowClick()"
+             ng-repeat="order in orders | startFrom:currentPage*pageSize| limitTo: pageSize | filter:query | orderBy:orderProp">
             <div class="grid-td c1">{{order.OrderID}}</div>
             <div class="grid-td c2">{{order.OrderDate}}</div>
             <div class="grid-td c5">{{order.CustomerID}}</div>

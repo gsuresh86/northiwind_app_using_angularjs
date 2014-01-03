@@ -3,7 +3,7 @@
     <div class="prod-info drop-shadow" ng-class="{active : isSelected(product)}" ng-click="handleRowClick()"
          ng-repeat="product in products|startFrom:currentPage*pageSize | limitTo:pageSize | filter:query | orderBy:orderProp">
         <div class="prod-img">
-            <img src="img/product/{{product.ProductID}}.png"/>
+            <img ng-src="{{product.prodImg}}"/>
         </div>
         <div class="prod_name"><h4>{{product.ProductName}}</h4></div>
         <div class="">Price : {{product.UnitPrice|currency:'&#x20B9;'}}</div>
@@ -14,5 +14,6 @@
     <input type="text" tabindex="0"/>
     <div product-detail></div>
 </div>
+<ng-overlay></ng-overlay>
 
 

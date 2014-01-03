@@ -1667,7 +1667,7 @@
                          * @ngdoc method
                          * @name angular.Module#controller
                          * @methodOf angular.Module
-                         * @param {string|Object} name Controller name, or an object map of controllers where the
+                         * @param {string|Object} name Controller name, or an object map of components where the
                          *    keys are the names and the values are the constructors.
                          * @param {Function} constructor Controller constructor function.
                          * @description
@@ -4938,11 +4938,11 @@
      *
      *   * `controller` - a controller instance - A controller instance if at least one directive on the
      *     element defines a controller. The controller is shared among all the directives, which allows
-     *     the directives to use the controllers as a communication channel.
+     *     the directives to use the components as a communication channel.
      *
      *   * `transcludeFn` - A transclude linking function pre-bound to the correct transclusion scope.
      *     The scope can be overridden by an optional first argument. This is the same as the `$transclude`
-     *     parameter of directive controllers.
+     *     parameter of directive components.
      *     `function([scope], cloneLinkingFn)`.
      *
      *
@@ -5826,7 +5826,7 @@
                                 childTranscludeFn = compile($template, transcludeFn, terminalPriority,
                                     replaceDirective && replaceDirective.name, {
                                         // Don't pass in:
-                                        // - controllerDirectives - otherwise we'll create duplicates controllers
+                                        // - controllerDirectives - otherwise we'll create duplicates components
                                         // - newIsolateScopeDirective or templateDirective - combining templates with
                                         //   element transclusion doesn't make sense.
                                         //
@@ -6099,7 +6099,7 @@
                                 // For directives with element transclusion the element is a comment,
                                 // but jQuery .data doesn't support attaching data to comment nodes as it's hard to
                                 // clean up (http://bugs.jquery.com/ticket/8335).
-                                // Instead, we save the controllers for the element in a local hash and attach to .data
+                                // Instead, we save the components for the element in a local hash and attach to .data
                                 // later, once we have the actual element.
                                 elementControllers[directive.name] = controllerInstance;
                                 if (!hasElementTranscludeDirective) {
@@ -6614,7 +6614,7 @@
      * @name ng.$controllerProvider
      * @description
      * The {@link ng.$controller $controller service} is used by Angular to create new
-     * controllers.
+     * components.
      *
      * This provider allows controller registration via the
      * {@link ng.$controllerProvider#methods_register register} method.
@@ -6628,7 +6628,7 @@
          * @ngdoc function
          * @name ng.$controllerProvider#register
          * @methodOf ng.$controllerProvider
-         * @param {string|Object} name Controller name, or an object map of controllers where the keys are
+         * @param {string|Object} name Controller name, or an object map of components where the keys are
          *    the names and the values are the constructors.
          * @param {Function|Array} constructor Controller constructor fn (optionally decorated with DI
          *    annotations in the array notation).
@@ -6662,7 +6662,7 @@
              * @return {Object} Instance of given controller.
              *
              * @description
-             * `$controller` service is responsible for instantiating controllers.
+             * `$controller` service is responsible for instantiating components.
              *
              * It's just a simple call to {@link AUTO.$injector $injector}, but extracted into
              * a service, so that one can override this service with {@link https://gist.github.com/1649788
@@ -10341,7 +10341,7 @@
          * dichotomy between data access in templates (accessed as raw values) and controller code
          * (accessed as promises).
          *
-         * In most code we ended up resolving promises manually in controllers anyway and thus unifying
+         * In most code we ended up resolving promises manually in components anyway and thus unifying
          * the model access there.
          *
          * Other downsides of automatic promise unwrapping:
@@ -11467,7 +11467,7 @@
                      * iterations exceeds 10.
                      *
                      * Usually, you don't call `$digest()` directly in
-                     * {@link ng.directive:ngController controllers} or in
+                     * {@link ng.directive:ngController components} or in
                      * {@link ng.$compileProvider#methods_directive directives}.
                      * Instead, you should call {@link ng.$rootScope.Scope#$apply $apply()} (typically from within
                      * a {@link ng.$compileProvider#methods_directive directives}), which will force a `$digest()`.
@@ -17443,7 +17443,7 @@
      * * Controller — The `ngController` directive specifies a Controller class; the class contains business
      *   logic behind the application to decorate the scope with functions and values
      *
-     * Note that you can also attach controllers to the DOM by declaring it in a route definition
+     * Note that you can also attach components to the DOM by declaring it in a route definition
      * via the {@link ngRoute.$route $route} service. A common mistake is to declare the controller
      * again using `ng-controller` in the template itself.  This will cause the controller to be attached
      * and executed twice.
@@ -18295,7 +18295,7 @@
                                     var newScope = scope.$new();
 
                                     // Note: This will also link all children of ng-include that were contained in the original
-                                    // html. If that content contains controllers, ... they could pollute/change the scope.
+                                    // html. If that content contains components, ... they could pollute/change the scope.
                                     // However, using ng-include on an element with additional content does not make sense...
                                     // Note: We can't remove them in the cloneAttchFn of $transclude as that
                                     // function is called before linking the content, which would apply child
@@ -18336,7 +18336,7 @@
      * <div class="alert alert-error">
      * The only appropriate use of `ngInit` for aliasing special properties of
      * {@link api/ng.directive:ngRepeat `ngRepeat`}, as seen in the demo below. Besides this case, you
-     * should use {@link guide/controller controllers} rather than `ngInit`
+     * should use {@link guide/controller components} rather than `ngInit`
      * to initialize values on a scope.
      * </div>
      *
@@ -19605,7 +19605,7 @@
 
             // remember the transclusion fn but call it during linking so that we don't process transclusion before directives on
             // the parent element even when the transclusion replaces the current element. (we can't use priority here because
-            // that applies only to compile fns and not controllers
+            // that applies only to compile fns and not components
             this.$transclude = $transclude;
         }],
 
