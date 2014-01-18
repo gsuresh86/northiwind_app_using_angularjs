@@ -93,7 +93,7 @@ NorthwindApp.controller('CustomerController', ['$scope', 'NorthwindService',
             })
             .error(function(response){ /*todo error case */ });
 
-        NorthwindService.getData('northwind/orders.json').success(function(response){ $scope.orders = response; });
+        NorthwindService.getData('data/orders.json').success(function(response){ $scope.orders = response; });
 
         $scope.handleRowClick = function($event){
             $scope.selected = this.customer;
@@ -119,8 +119,12 @@ NorthwindApp.controller('OrderController', ['$scope', 'NorthwindService',
         $scope.currentPage = 0;
         $scope.pageSize = 10;
         $scope.orders = [];
+        $scope.selPage = 1;
         NorthwindService.getData('data/orders.json')
-            .success(function(response){ $scope.orders = response; })
+            .success(function(response){
+                $scope.orders = response;
+                $scope.noOfPages = Math.round($scope.orders.length/$scope.pageSize)
+            })
             .error(function(response){ /*todo error case */ });
 
         $scope.handleRowClick = function(){
@@ -128,6 +132,11 @@ NorthwindApp.controller('OrderController', ['$scope', 'NorthwindService',
             $scope.showOrder = true;
             $scope.orderInfo = this.order;
         };
+
+        $scope.test = function(){
+            alert($scope.selPage);
+        }
+
 
         $scope.isSelected = function(order) {
             return $scope.selected === order;

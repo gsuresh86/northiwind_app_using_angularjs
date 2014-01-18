@@ -1,10 +1,17 @@
 <div class="orderGrid grid drop-shadow">
     <div class="grid-nav">
-        <button ng-click="currentPage=0"><span> ‹‹ </span> </button>
-        <button ng-click="currentPage=currentPage-1" ng-disabled="currentPage==0"><span> ‹ </span> </button>
-        <button class="pageValue"><span>{{currentPage+1 }} / {{ orders.length/pageSize}}</span></button>
-        <button ng-click="currentPage=currentPage+1" ng-disabled="currentPage >= orders.length/pageSize - 1"><span> › </span> </button>
-        <button ng-click="currentPage=orders.length/pageSize - 1"><span> ›› </span> </button>
+        <button ng-click="currentPage=0" ng-disabled="currentPage==0"><span> &#171; </span> </button>
+        <button ng-click="currentPage=currentPage-1" ng-disabled="currentPage==0"><span> &#8249; </span> </button>
+        <button ng-click="" class="pageValue"><span>{{currentPage+1 }} / {{ noOfPages}}</span></button>
+        <button ng-click="currentPage=currentPage+1" ng-disabled="currentPage >= orders.length/pageSize - 1"><span>&#8250;</span> </button>
+        <button ng-click="currentPage=orders.length/pageSize-1" ng-disabled="currentPage==orders.length/pageSize-1"><span> &#187; </span> </button>
+        <button ng-click="currentPage=0;pageSize=(pageSize != 10) ? 10 : orders.length" class="showAllBtn"><span>{{ (pageSize != 10) ? 'Collapse' : 'ShowAll' }}</span></button>
+        <div class="gotoPage">
+            <input type="number" ng-model="selPage"/>
+            <button ng-click="currentPage=(selPage-1)<0 ? 0 : (selPage-1)>noOfPages ? noOfPages-1 : selPage-1" class='selPage' ng-disabled="pageSize == orders.length">
+                <span>Goto</span>
+            </button>
+        </div>
     </div>
     <div class="grid-header">
         <div class="grid-tr">
@@ -17,7 +24,7 @@
             <div class="grid-td c5">ShipCountry</div>
         </div>
     </div>
-    <div class="grid-body">
+    <div class="grid-body {{(pageSize == 10) ? 'collapse' : 'showAll'}}">
         <div class="grid-tr" ng-class="{active : isSelected(order)}" ng-click="handleRowClick()"
              ng-repeat="order in orders | startFrom:currentPage*pageSize| limitTo: pageSize | filter:query | orderBy:orderProp">
             <div class="grid-td c1">{{order.OrderID}}</div>
