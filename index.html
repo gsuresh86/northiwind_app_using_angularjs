@@ -31,14 +31,16 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-angular-js-application" class="anchor" href="#welcome-to-angular-js-application"><span class="octicon octicon-link"></span></a>Welcome to Angular js Application.</h3>
+        <h2>
+<a name="welcome-to-angular-js-application" class="anchor" href="#welcome-to-angular-js-application"><span class="octicon octicon-link"></span></a>Welcome to Angular js Application.</h2>
 
 <p>This is a simple application built on top of angular using northwind db data as json.
-Here we don't require any jquery library for DOM manipulation, any handlebar library for template compiling and rendering and any formatting library. All you need is only the angular js libraries.</p>
+Here you don't require any jquery library for DOM manipulation, any handlebar library for template compiling and rendering and any other formatting library for data formatting. All you need is only the angular js libraries.</p>
 
-<h3>
-<a name="folder-structure" class="anchor" href="#folder-structure"><span class="octicon octicon-link"></span></a>Folder structure</h3>
+<p>In this we are going to touch the basic concepts required for writing a good angular application.</p>
+
+<h2>
+<a name="folder-structure" class="anchor" href="#folder-structure"><span class="octicon octicon-link"></span></a>Folder structure</h2>
 
 <pre><code>northwind
 * css
@@ -50,25 +52,96 @@ Here we don't require any jquery library for DOM manipulation, any handlebar lib
 
 </code></pre>
 
-<h3>
-<a name="lets-start-writing-the-app" class="anchor" href="#lets-start-writing-the-app"><span class="octicon octicon-link"></span></a>Lets start writing the App</h3>
+<h2>
+<a name="lets-start-writing-the-app" class="anchor" href="#lets-start-writing-the-app"><span class="octicon octicon-link"></span></a>Lets start writing the App</h2>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Create a index.html file and include the angular js libraries to it.</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<p><img src="http://4.bp.blogspot.com/-6zr8icAo7D8/UujepDYmHYI/AAAAAAAACKE/Yuu18ldI4M4/s1600/js+include.PNG" alt=""></p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Now create an app.js</p>
 
 <h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a name="module" class="anchor" href="#module"><span class="octicon octicon-link"></span></a>Module</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Create an angular module for the app. Here we are going to create the app for Norhwind.
+So i created like below.</p>
+
+<pre><code>//Define an angular module for our app
+var NorthwindApp = angular.module('NorthwindApp', ['ngRoute', 'ngResource']); 
+
+</code></pre>
+
+<p>Here i included the dependency required for this app like ngRoute and ngResource. 
+ngRoute will help in creating the routing for your app and ngResource will help in making the http call to and fetch data for your application.</p>
+
+<h3>
+<a name="router" class="anchor" href="#router"><span class="octicon octicon-link"></span></a>Router</h3>
+
+<p>Use the below code for configuring your routes. 
+Here we need the $routeProvider directive fron ngRoute.
+So here each route needs a templateUrl which loads the template for the route and a controller to it</p>
+
+<pre><code>/* Router */
+NorthwindApp.config(['$routeProvider',
+    function($routeProvider) {
+        $routeProvider.
+            when('/employees', {
+                templateUrl: 'partials/employee-list.html',
+                controller: 'EmployeeController'
+            }).
+            when('/customers', {
+                templateUrl: 'partials/customer-list.html',
+                controller: 'CustomerController'
+            }).
+            .....
+            .....
+            .....
+            }). 
+            otherwise({
+                redirectTo: '/customers'
+            });
+    }
+]);
+</code></pre>
+
+<h3>
+<a name="controller" class="anchor" href="#controller"><span class="octicon octicon-link"></span></a>Controller</h3>
+
+<p>Below snippet is the controller for the Employee route.
+Here the $scope act like model for the controller. Whenever the $scope variables get modified 
+template gets the update and rendered. I am using a service called NorthwindService (explained below)
+which will fetch the data for the controller. Once the data received , i am updating the $scope.employees array which in turn update the template and render it.</p>
+
+<pre><code>NorthwindApp.controller('EmployeeController', ['$scope', 'NorthwindService',
+    function($scope, NorthwindService){
+        $scope.employees = [];
+        NorthwindService.getData('data/employees.json')
+            .success(function(response){
+                $scope.employees = response;
+            })
+            .error(function(response){ /*todo error case */ });
+    }
+]);
+</code></pre>
+
+<h3>
+<a name="partialstemplate" class="anchor" href="#partialstemplate"><span class="octicon octicon-link"></span></a>Partials/Template</h3>
+
+<p>This is partial/template for the employee route</p>
+
+<pre><code>&lt;div class="emp-list" ng-click="hideEmpInfo($event)"&gt;
+   &lt;div class="" ng-repeat="employee in employees | filter:query | orderBy:orderProp"&gt;
+        &lt;div class="emp-name" ng-click="handleClick($event)" ng-class="{active : isSelected(employee)}"&gt;
+            &lt;span class=""&gt;{{employee.FirstName }}&lt;/span&gt;
+            &lt;span class=""&gt;{{employee.LastName}}&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+ &lt;/div&gt;
+</code></pre>
+
+<h3>
+<a name="service" class="anchor" href="#service"><span class="octicon octicon-link"></span></a>Service</h3>
       </section>
     </div>
 
