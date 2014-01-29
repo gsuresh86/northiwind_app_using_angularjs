@@ -128,11 +128,11 @@ which will fetch the data for the controller. Once the data received , i am upda
 <h3>
 <a name="partialstemplate" class="anchor" href="#partialstemplate"><span class="octicon octicon-link"></span></a>Partials/Template</h3>
 
-<p>This is partial/template for the employee route</p>
+<p>This is partial/template for the employee route. Here i used ngRepeat directive to iterate the employees data and render the each employee data</p>
 
-<pre><code>&lt;div class="emp-list" ng-click="hideEmpInfo($event)"&gt;
+<pre><code>&lt;div class="emp-list"&gt;
    &lt;div class="" ng-repeat="employee in employees | filter:query | orderBy:orderProp"&gt;
-        &lt;div class="emp-name" ng-click="handleClick($event)" ng-class="{active : isSelected(employee)}"&gt;
+        &lt;div class="emp-name"&gt;
             &lt;span class=""&gt;{{employee.FirstName }}&lt;/span&gt;
             &lt;span class=""&gt;{{employee.LastName}}&lt;/span&gt;
         &lt;/div&gt;
@@ -142,6 +142,22 @@ which will fetch the data for the controller. Once the data received , i am upda
 
 <h3>
 <a name="service" class="anchor" href="#service"><span class="octicon octicon-link"></span></a>Service</h3>
+
+<p>This is service created from angular factory api for fetching data</p>
+
+<pre><code>/* Factory */
+NorthwindApp.factory('NorthwindService', ['$rootScope', '$http',
+    function($rootScope, $http){
+        return {
+            getData: function(url){
+                return $http.get(url);
+            }
+        };
+    }
+]);
+</code></pre>
+
+<p>You can download the gitub source from the above link and test it. You will get a complete picture about the app.</p>
       </section>
     </div>
 
